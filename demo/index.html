@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>点击反馈</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <script type="text/javascript" src="../dist/click-response.js"></script>
+
+    <style>
+      html, body {
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+      }
+      .app-root {
+        width: 100%;
+        max-width: 560px;
+        margin: 0 auto;
+        height: 100%;
+        padding: 20px;
+        box-sizing: border-box;
+        background: #fff;
+        overflow: auto;
+      }
+      .app-root {
+        width: 100%;
+      }
+      .header {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 50px;
+        font-size: 14px;
+        color: #999;
+      }
+      .header h1 {
+        color: #333;
+        font-size: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app-root">
+      <header class="header">
+        <h1>click-response 文字动画</h1>
+        <div class="addr">
+          <span>说明文档: </span><a id="addr" href="">https://github.com/qgh810/click-response</a>
+        </div>
+      </header>
+
+
+    </div>
+  </body>
+  <script>
+    window.onload = function () {
+
+      var addrBtn = document.getElementById('addr')
+      addrBtn.addEventListener('click', function (e) {
+        e.preventDefault()
+        window.open('https://github.com/qgh810/click-response')
+      }, false)
+
+    }
+  </script>
+</html>
