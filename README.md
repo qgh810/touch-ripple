@@ -41,8 +41,8 @@ new TouchRipple('.btn', 'rgba(0,0,0,0.2)')
 // 如果还有其它设置 请这样写
 new TouchRipple('.btn', {
   time: 500, // 涟漪散发时间
-  color: 'rgba(0,0,0,0.2)',
-  size: 200
+  color: 'rgba(0,0,0,0.2)', // 涟漪颜色
+  size: 200 // 涟漪直径
 }
 ```
 
