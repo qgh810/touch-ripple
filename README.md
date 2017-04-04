@@ -1,7 +1,9 @@
 ## touch-ripple
 
 触摸涟漪反馈效果, 支持 颜色自定义,涟漪直径自定义和涟漪速度自定义, 不影响原有事件, 兼容移动端<br>
+
 [查看DEMO](http://qgh810.github.io/src/touch-ripple/index.html)<br>
+
 web多数的体验效果不佳是因为很多交互没有及时给出反馈, 特别是处理异步逻辑的时候用户需要等待, 如果按钮点击后没及时给出反馈就会让页面有卡顿的感觉,这个小插件就是为了解决触发某些动作之前的按钮反馈效果<br>
 
 <img src="https://github.com/qgh810/qgh810.github.io/blob/master/src/touch-ripple/assets/images/demo.gif?raw=true" width="250" />
@@ -60,6 +62,6 @@ AnimateText接收两个参数, 例如: new AnimateText(element, options)
 
 | 参数 | 类型 | 默认值 | 是否必填 | 描述 |
 | :---: |  :--- |  :---: |  :---: |  :--- |
-| color | String | rgba('0,0,0,0.2') | 否 | 涟漪颜色 |
+| color | String | rgba('0,0,0,0.2') | 否 | 涟漪颜色, 可以传入css能识别的颜色字符串 |
 | size | Number | element宽和高的较大值 | 否 | 涟漪直径 |
 | time | Number | 500 | 否 | 涟漪扩散时间 |

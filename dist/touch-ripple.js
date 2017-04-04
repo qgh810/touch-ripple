@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -119,14 +119,37 @@ function checkNode(el) {
 "use strict";
 
 
-var _config = __webpack_require__(2);
+Object.defineProperty(exports, "__esModule", {
+   value: true
+});
+function isPC() {
+   var userAgentInfo = navigator.userAgent;
+   var Agents = new Array("Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod");
+   var flag = true;
+   for (var v = 0; v < Agents.length; v++) {
+      if (userAgentInfo.indexOf(Agents[v]) > 0) {
+         flag = false;break;
+      }
+   }
+   return flag;
+}
+exports.default = isPC;
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _config = __webpack_require__(3);
 
 function showWarn(str) {
   console.warn(str + ' 请参考相关文档: ' + _config.DOCUMENT_ADDR);
 }
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -138,7 +161,7 @@ Object.defineProperty(exports, "__esModule", {
 var DOCUMENT_ADDR = exports.DOCUMENT_ADDR = 'https://github.com/qgh810/animate-text';
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -148,9 +171,9 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _check = __webpack_require__(0);
 
-var _log = __webpack_require__(1);
+var _log = __webpack_require__(2);
 
-var _isPC = __webpack_require__(4);
+var _isPC = __webpack_require__(1);
 
 var _isPC2 = _interopRequireDefault(_isPC);
 
@@ -262,6 +285,10 @@ var TouchRipple = function () {
           width = _el$getBoundingClient.width,
           height = _el$getBoundingClient.height;
 
+      width -= parseInt(this.el.currentStyle.borderLeftWidth);
+      width -= parseInt(this.el.currentStyle.borderRightWidth);
+      height -= parseInt(this.el.currentStyle.borderTopWidth);
+      height -= parseInt(this.el.currentStyle.borderBottomWidth);
       style.position = 'absolute';
       style.left = '0';
       style.top = '0';
@@ -339,29 +366,6 @@ var TouchRipple = function () {
 }();
 
 module.exports = TouchRipple;
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-   value: true
-});
-function isPC() {
-   var userAgentInfo = navigator.userAgent;
-   var Agents = new Array("Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod");
-   var flag = true;
-   for (var v = 0; v < Agents.length; v++) {
-      if (userAgentInfo.indexOf(Agents[v]) > 0) {
-         flag = false;break;
-      }
-   }
-   return flag;
-}
-exports.default = isPC;
 
 /***/ })
 /******/ ]);

@@ -83,6 +83,10 @@ class TouchRipple {
     })
     let style = element.style
     let {width, height } = this.el.getBoundingClientRect()
+    width -= parseInt(this.el.currentStyle.borderLeftWidth)
+    width -= parseInt(this.el.currentStyle.borderRightWidth)
+    height -= parseInt(this.el.currentStyle.borderTopWidth)
+    height -= parseInt(this.el.currentStyle.borderBottomWidth)
     style.position = 'absolute'
     style.left = '0'
     style.top = '0'
