@@ -1,27 +1,27 @@
 {
-  "name": "click-response",
+  "name": "touch-ripple",
   "version": "0.0.1",
-  "description": "click response",
-  "main": "dist/click-response.js",
+  "description": "touch ripple",
+  "main": "dist/touch-ripple.js",
   "scripts": {
     "dev": "webpack --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/qgh810/click-response.git"
+    "url": "git+https://github.com/qgh810/touch-ripple.git"
   },
   "keywords": [
-    "response",
-    "responsive",
-    "click-response"
+    "ripple",
+    "ripples",
+    "touch-ripple"
   ],
   "author": "qiuguohui",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/qgh810/click-response/issues"
+    "url": "https://github.com/qgh810/touch-ripple/issues"
   },
-  "homepage": "https://github.com/qgh810/click-response#readme",
+  "homepage": "https://github.com/qgh810/touch-ripple#readme",
   "devDependencies": {
     "babel-core": "^6.24.0",
     "babel-loader": "^6.4.0",

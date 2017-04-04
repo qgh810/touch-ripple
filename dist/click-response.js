@@ -2,11 +2,11 @@
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
 	else if(typeof define === 'function' && define.amd)
-		define("AnimateText", [], factory);
+		define("ClickResponse", [], factory);
 	else if(typeof exports === 'object')
-		exports["AnimateText"] = factory();
+		exports["ClickResponse"] = factory();
 	else
-		root["AnimateText"] = factory();
+		root["ClickResponse"] = factory();
 })(this, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -91,6 +91,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 exports.checkNode = checkNode;
 function checkNode(el) {
+  HTMLElement.prototype.__defineGetter__('currentStyle', function () {
+    return this.ownerDocument.defaultView.getComputedStyle(this, null);
+  });
   var result = el;
   if (!result) {
     return console.error('找不到当前节点', el);
@@ -149,12 +152,13 @@ var _log = __webpack_require__(1);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var AnimateText = function () {
-  function AnimateText(el, options) {
-    _classCallCheck(this, AnimateText);
+var MARK_CLASSNAME = 'q-touch-ripple-mark';
+
+var ClickResponse = function () {
+  function ClickResponse(el, options) {
+    _classCallCheck(this, ClickResponse);
 
     this.initData(el, options) && this.init();
-    this.play = this.play.bind(this);
   }
 
   /**
@@ -162,29 +166,13 @@ var AnimateText = function () {
    */
 
 
-  _createClass(AnimateText, [{
+  _createClass(ClickResponse, [{
     key: 'initData',
     value: function initData(el, options) {
       this.el = (0, _check.checkNode)(el);
       if (!this.el) return;
       options = this.checkOptions(options);
       this.options = options;
-      if (options.isNumber) {
-        this.number = Number(this.el.innerText);
-        if (!this.number && this.number !== 0) {
-          this.options.isNumber = false;
-          return this.initData(el, this.options);
-        }
-        this.startNumber = options.startNumber - 0 || 0;
-        this.changeCount = options.changeCount - 0 || 24;
-      } else {
-        this.text = this.el.innerText;
-        this.textArr = this.text.split('');
-      }
-      this.isNumber = options.isNumber;
-      this.time = options.time;
-      this.el.innerText = '';
-      this.onAnimated = options.onAnimated;
       return true;
     }
 
@@ -195,14 +183,14 @@ var AnimateText = function () {
   }, {
     key: 'checkOptions',
     value: function checkOptions(options) {
-      if (typeof options === 'number') options = { time: options };
+      if (typeof options === 'string') {
+        options = { color: options };
+      }
       options = options || {};
       var baseOptions = {
+        color: 'rgba(0,0,0,0.2)',
         time: 500,
-        isNumber: false,
-        startNumber: 0,
-        changeCount: 32,
-        onAnimated: function onAnimated() {}
+        size: 0
       };
       for (var option in baseOptions) {
         !options[option] && (options[option] = baseOptions[option]);
@@ -212,94 +200,127 @@ var AnimateText = function () {
   }, {
     key: 'init',
     value: function init() {
-      var time = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.time;
-
-      this.isNumber ? this.playNumberAnimation(time) : this.playTextAnimation(time);
+      this.setElStyle();
+      this.addEventListener();
     }
   }, {
-    key: 'playTextAnimation',
-    value: function playTextAnimation(time) {
+    key: 'setElStyle',
+    value: function setElStyle() {
+      this.el.style.position = this.el.style.position || 'relative';
+    }
+  }, {
+    key: 'addEventListener',
+    value: function addEventListener() {
+      this.el.addEventListener('mousedown', this.onMouseDown.bind(this));
+      this.el.addEventListener('mouseup', this.onMouseUp.bind(this));
+    }
+  }, {
+    key: 'onMouseDown',
+    value: function onMouseDown(e) {
+      this.target = e.target;
+      var pageX = e.pageX,
+          pageY = e.pageY;
+
+      this.mouseDownPosition = { pageX: pageX, pageY: pageY };
+      this.showRipples();
+    }
+  }, {
+    key: 'showRipples',
+    value: function showRipples() {
+      var mark = document.createElement('div');
+      mark.className = MARK_CLASSNAME;
+      this.setMarkStyle(mark);
+      var ripples = document.createElement('div');
+      this.setRipplesStyle(ripples, mark);
+      mark.appendChild(ripples);
+      this.el.appendChild(mark);
+    }
+  }, {
+    key: 'setMarkStyle',
+    value: function setMarkStyle(element) {
+      HTMLElement.prototype.__defineGetter__('currentStyle', function () {
+        return this.ownerDocument.defaultView.getComputedStyle(this, null);
+      });
+      var style = element.style;
+
+      var _el$getBoundingClient = this.el.getBoundingClientRect(),
+          width = _el$getBoundingClient.width,
+          height = _el$getBoundingClient.height;
+
+      style.position = 'absolute';
+      style.left = '0';
+      style.top = '0';
+      style.width = width + 'px';
+      style.height = height + 'px';
+      style.borderRadius = this.el.currentStyle.borderRadius;
+      style.overflow = 'hidden';
+      // style.background = 'rgba(255,0,0,0.5)'
+    }
+  }, {
+    key: 'setRipplesStyle',
+    value: function setRipplesStyle(ripples, mark) {
       var _this = this;
 
-      var textArr = [].concat(this.textArr);
-      var currTextArr = [];
-      this.tid = setInterval(function () {
-        var word = textArr.shift();
-        if (!word) {
-          _this.onEnd();
-          return clearInterval(_this.tid);
-        }
-        currTextArr.push(word);
-        _this.el.innerText = currTextArr.join('');
-      }, time / this.textArr.length);
-    }
-  }, {
-    key: 'playNumberAnimation',
-    value: function playNumberAnimation(time) {
-      var _this2 = this;
+      var style = ripples.style;
 
-      var changeCount = this.changeCount;
-      var targetNumber = this.number;
-      if (!targetNumber === 0) return;
-      var targetNumberDecimalLength = this.getDecimalLength(targetNumber);
-      var StartNumberDecimalLength = this.getDecimalLength(this.startNumber);
-      var decimalLength = Math.max(targetNumberDecimalLength, StartNumberDecimalLength);
-      var d = this.number - this.startNumber;
-      var everyD = (d / changeCount).toFixed(decimalLength) - 0;
-      if (everyD === 0) {
-        (0, _log.showWarn)('差值过小无法动画');
-        return this.el.innerText = targetNumber;
-      }
-      var currNumber = this.startNumber;
-      this.tid = setInterval(function () {
-        currNumber = (currNumber + everyD).toFixed(decimalLength) - 0;
-        if (Math.abs(currNumber - targetNumber) < Math.abs(everyD)) {
-          _this2.el.innerText = targetNumber;
-          _this2.onEnd();
-          return clearInterval(_this2.tid);
-        }
-        _this2.el.innerText = currNumber;
-      }, time / changeCount);
-    }
-  }, {
-    key: 'getDecimalLength',
-    value: function getDecimalLength(number) {
-      var numberStr = number + '';
-      return numberStr.split('.')[1] && numberStr.split('.')[1].length || 0;
-    }
-  }, {
-    key: 'play',
-    value: function play() {
-      var time = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.time;
+      var _el$getBoundingClient2 = this.el.getBoundingClientRect(),
+          width = _el$getBoundingClient2.width,
+          height = _el$getBoundingClient2.height,
+          left = _el$getBoundingClient2.left,
+          top = _el$getBoundingClient2.top;
 
-      clearInterval(this.tid);
-      this.el.innerText = this.isNumber ? this.number : this.text;
-      var options = {
-        time: this.time,
-        isNumber: this.isNumber,
-        startNumber: this.startNumber,
-        changeCount: this.changeCount,
-        onAnimated: this.onAnimated
-      };
-      this.initData(this.el, options) && this.init();
-    }
-  }, {
-    key: 'onEnd',
-    value: function onEnd() {
-      var _this3 = this;
+      var length = parseInt(this.options.size) || Math.max(width, height);
+      style.position = 'absolute';
+      var offsetLeft = this.mouseDownPosition.pageX - left - length / 2 + 'px';
+      var offsetTop = this.mouseDownPosition.pageY - top - length / 2 + 'px';
+      style.left = offsetLeft;
+      style.top = offsetTop;
+      style.width = style.height = length + 'px';
+      style.background = this.options.color;
+      style.borderRadius = '50%';
+      style.borderRadius = '50%';
+      style.transition = 'all ease ' + this.options.time / 1000 + 's';
 
-      var callBack = this.options.onAnimated;
-      if (typeof callBack !== 'function') return;
+      style.transform = 'scale(0)';
+      style.opacity = 1;
+
       setTimeout(function () {
-        _this3.options.onAnimated();
-      }, 10);
+        style.transform = 'scale(1)';
+        style.opacity = 0;
+        setTimeout(function () {
+          _this.onAnimationEnd(mark);
+        }, _this.options.time);
+      }, 0);
+    }
+  }, {
+    key: 'onAnimationEnd',
+    value: function onAnimationEnd(mark) {
+      this.el.removeChild(mark);
+    }
+  }, {
+    key: 'onMouseUp',
+    value: function onMouseUp() {
+      this.el !== this.target && this.dispatchEvent('click', this.target);
+    }
+  }, {
+    key: 'dispatchEvent',
+    value: function dispatchEvent(eventName, el) {
+      try {
+        //非IE
+        var evObj = document.createEvent('MouseEvents');
+        evObj.initEvent(eventName, true, false);
+        el.dispatchEvent(evObj);
+      } catch (e) {
+        //IE
+        el.fireEvent('on' + eventName);
+      }
     }
   }]);
 
-  return AnimateText;
+  return ClickResponse;
 }();
 
-module.exports = AnimateText;
+module.exports = ClickResponse;
 
 /***/ })
 /******/ ]);

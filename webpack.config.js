@@ -1,12 +1,12 @@
 var path = require('path');
 var webpack = require('webpack')
-var libraryName = 'ClickResponse'
+var libraryName = 'TouchRipple'
 
 module.exports = {
   entry: "./src/main.js",
   output: {
     path: __dirname,
-    filename: "dist/click-response.js",
+    filename: "dist/touch-ripple.js",
     library: libraryName,
     libraryTarget: 'umd',
     umdNamedDefine: true

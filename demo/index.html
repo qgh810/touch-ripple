@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>点击反馈</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <script type="text/javascript" src="../dist/click-response.js"></script>
+    <script type="text/javascript" src="../dist/touch-ripple.js"></script>
 
     <style>
       html, body {
@@ -39,16 +39,38 @@
         color: #333;
         font-size: 20px;
       }
+
+      .demo-box {
+        width: 100%;
+        height: auto;
+        text-align: center;
+      }
+      .demo-btn {
+        display: inline-block;
+        margin: 20px auto;
+        background-color: green;
+        padding: 20px 50px;
+        color: #fff;
+        border-radius: 4px;
+        cursor: pointer;
+      }
     </style>
   </head>
   <body>
     <div class="app-root">
       <header class="header">
-        <h1>click-response 文字动画</h1>
+        <h1>touch-ripple 文字动画</h1>
         <div class="addr">
-          <span>说明文档: </span><a id="addr" href="">https://github.com/qgh810/click-response</a>
+          <span>说明文档: </span><a id="addr" href="">https://github.com/qgh810/touch-ripple</a>
         </div>
       </header>
+
+
+      <div class="demo-box">
+        <div class="demo-btn">
+          <span>Click for Ripple</span>
+        </div>
+      </div>
 
 
     </div>
@@ -56,10 +78,16 @@
   <script>
     window.onload = function () {
 
+      var clickResponse = new ClickResponse('.demo-btn', {
+        color: 'rgba(0,0,0,0.2)',
+        time: 500,
+        size: null
+      })
+
       var addrBtn = document.getElementById('addr')
       addrBtn.addEventListener('click', function (e) {
         e.preventDefault()
-        window.open('https://github.com/qgh810/click-response')
+        window.open('https://github.com/qgh810/touch-ripple')
       }, false)
 
     }
