@@ -154,9 +154,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var MARK_CLASSNAME = 'q-touch-ripple-mark';
 
-var ClickResponse = function () {
-  function ClickResponse(el, options) {
-    _classCallCheck(this, ClickResponse);
+var TouchRipple = function () {
+  function TouchRipple(el, options) {
+    _classCallCheck(this, TouchRipple);
 
     this.initData(el, options) && this.init();
   }
@@ -166,7 +166,7 @@ var ClickResponse = function () {
    */
 
 
-  _createClass(ClickResponse, [{
+  _createClass(TouchRipple, [{
     key: 'initData',
     value: function initData(el, options) {
       this.el = (0, _check.checkNode)(el);
@@ -317,10 +317,10 @@ var ClickResponse = function () {
     }
   }]);
 
-  return ClickResponse;
+  return TouchRipple;
 }();
 
-module.exports = ClickResponse;
+module.exports = TouchRipple;
 
 /***/ })
 /******/ ]);

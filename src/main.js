@@ -2,7 +2,7 @@ import { checkNode } from './utils/check'
 import { showWarn } from './utils/log'
 
 const MARK_CLASSNAME = 'q-touch-ripple-mark'
-class ClickResponse {
+class TouchRipple {
   constructor (el, options) {
     this.initData(el, options) && this.init()
   }
@@ -132,4 +132,4 @@ class ClickResponse {
   }
 }
 
-module.exports = ClickResponse
+module.exports = TouchRipple
