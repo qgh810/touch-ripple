@@ -237,6 +237,7 @@ var TouchRipple = function () {
     key: 'setElStyle',
     value: function setElStyle() {
       this.el.style.position = this.el.style.position || 'relative';
+      this.el.style.webkitTapHighlightColor = 'rgba(0,0,0,0)';
     }
   }, {
     key: 'addEventListener',
