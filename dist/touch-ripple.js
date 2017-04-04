@@ -2,11 +2,11 @@
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
 	else if(typeof define === 'function' && define.amd)
-		define("ClickResponse", [], factory);
+		define("TouchRipple", [], factory);
 	else if(typeof exports === 'object')
-		exports["ClickResponse"] = factory();
+		exports["TouchRipple"] = factory();
 	else
-		root["ClickResponse"] = factory();
+		root["TouchRipple"] = factory();
 })(this, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -150,9 +150,16 @@ var _check = __webpack_require__(0);
 
 var _log = __webpack_require__(1);
 
+var _isPC = __webpack_require__(4);
+
+var _isPC2 = _interopRequireDefault(_isPC);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var MARK_CLASSNAME = 'q-touch-ripple-mark';
+var ISPC = (0, _isPC2.default)();
 
 var TouchRipple = function () {
   function TouchRipple(el, options) {
@@ -211,12 +218,19 @@ var TouchRipple = function () {
   }, {
     key: 'addEventListener',
     value: function addEventListener() {
-      this.el.addEventListener('mousedown', this.onMouseDown.bind(this));
-      this.el.addEventListener('mouseup', this.onMouseUp.bind(this));
+      console.log(ISPC);
+      if (ISPC) {
+        this.el.addEventListener('mousedown', this.onMouseDown.bind(this));
+        this.el.addEventListener('mouseup', this.onMouseUp.bind(this));
+      } else {
+        this.el.addEventListener('touchstart', this.onMouseDown.bind(this));
+        this.el.addEventListener('touchend', this.onMouseUp.bind(this));
+      }
     }
   }, {
     key: 'onMouseDown',
     value: function onMouseDown(e) {
+      e.preventDefault();
       this.target = e.target;
       var pageX = e.pageX,
           pageY = e.pageY;
@@ -253,6 +267,7 @@ var TouchRipple = function () {
       style.width = width + 'px';
       style.height = height + 'px';
       style.borderRadius = this.el.currentStyle.borderRadius;
+      style.cursor = this.target.currentStyle.cursor;
       style.overflow = 'hidden';
       // style.background = 'rgba(255,0,0,0.5)'
     }
@@ -321,6 +336,29 @@ var TouchRipple = function () {
 }();
 
 module.exports = TouchRipple;
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+   value: true
+});
+function isPC() {
+   var userAgentInfo = navigator.userAgent;
+   var Agents = new Array("Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod");
+   var flag = true;
+   for (var v = 0; v < Agents.length; v++) {
+      if (userAgentInfo.indexOf(Agents[v]) > 0) {
+         flag = false;break;
+      }
+   }
+   return flag;
+}
+exports.default = isPC;
 
 /***/ })
 /******/ ]);

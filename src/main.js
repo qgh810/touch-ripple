@@ -1,7 +1,10 @@
 import { checkNode } from './utils/check'
 import { showWarn } from './utils/log'
+import isPC from './utils/isPC'
 
 const MARK_CLASSNAME = 'q-touch-ripple-mark'
+var ISPC = isPC()
+
 class TouchRipple {
   constructor (el, options) {
     this.initData(el, options) && this.init()
@@ -47,11 +50,18 @@ class TouchRipple {
   }
 
   addEventListener () {
-    this.el.addEventListener('mousedown', this.onMouseDown.bind(this))
-    this.el.addEventListener('mouseup', this.onMouseUp.bind(this))
+    console.log(ISPC)
+    if (ISPC) {
+      this.el.addEventListener('mousedown', this.onMouseDown.bind(this))
+      this.el.addEventListener('mouseup', this.onMouseUp.bind(this))
+    } else {
+      this.el.addEventListener('touchstart', this.onMouseDown.bind(this))
+      this.el.addEventListener('touchend', this.onMouseUp.bind(this))
+    }
   }
 
   onMouseDown (e) {
+    e.preventDefault()
     this.target = e.target
     let { pageX, pageY } = e
     this.mouseDownPosition = { pageX, pageY }
@@ -80,6 +90,7 @@ class TouchRipple {
     style.width = width + 'px'
     style.height = height + 'px'
     style.borderRadius = this.el.currentStyle.borderRadius
+    style.cursor = this.target.currentStyle.cursor
     style.overflow = 'hidden'
     // style.background = 'rgba(255,0,0,0.5)'
   }
