@@ -50,7 +50,6 @@ class TouchRipple {
   }
 
   addEventListener () {
-    console.log(ISPC)
     if (ISPC) {
       this.el.addEventListener('mousedown', this.onMouseDown.bind(this))
       this.el.addEventListener('mouseup', this.onMouseUp.bind(this))
@@ -63,7 +62,7 @@ class TouchRipple {
   onMouseDown (e) {
     e.preventDefault()
     this.target = e.target
-    let { pageX, pageY } = e
+    let { pageX, pageY } = ISPC ? e : e.touches[0]
     this.mouseDownPosition = { pageX, pageY }
     this.showRipples()
   }

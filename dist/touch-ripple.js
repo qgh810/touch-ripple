@@ -218,7 +218,6 @@ var TouchRipple = function () {
   }, {
     key: 'addEventListener',
     value: function addEventListener() {
-      console.log(ISPC);
       if (ISPC) {
         this.el.addEventListener('mousedown', this.onMouseDown.bind(this));
         this.el.addEventListener('mouseup', this.onMouseUp.bind(this));
@@ -232,8 +231,10 @@ var TouchRipple = function () {
     value: function onMouseDown(e) {
       e.preventDefault();
       this.target = e.target;
-      var pageX = e.pageX,
-          pageY = e.pageY;
+
+      var _ref = ISPC ? e : e.touches[0],
+          pageX = _ref.pageX,
+          pageY = _ref.pageY;
 
       this.mouseDownPosition = { pageX: pageX, pageY: pageY };
       this.showRipples();
