@@ -270,6 +270,8 @@ var TouchRipple = function () {
       style.borderRadius = this.el.currentStyle.borderRadius;
       style.cursor = this.target.currentStyle.cursor;
       style.overflow = 'hidden';
+      style.zIndex = '20';
+
       // style.background = 'rgba(255,0,0,0.5)'
     }
   }, {
