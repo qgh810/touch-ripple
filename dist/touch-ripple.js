@@ -346,7 +346,7 @@ var TouchRipple = function () {
   }, {
     key: 'onMouseUp',
     value: function onMouseUp() {
-      this.el !== this.target && this.dispatchEvent('click', this.target);
+      this.el !== this.target && this.dispatchEvent('mouseup', this.target);
     }
   }, {
     key: 'dispatchEvent',

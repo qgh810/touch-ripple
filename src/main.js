@@ -133,7 +133,7 @@ class TouchRipple {
   }
 
   onMouseUp () {
-    this.el !== this.target && this.dispatchEvent('click', this.target)
+    this.el !== this.target && this.dispatchEvent('mouseup', this.target)
   }
 
   dispatchEvent (eventName, el) {
